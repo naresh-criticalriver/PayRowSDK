@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity(), PayRowAdapterListener {
 
     }
 
-
     override fun onAdapterInitComplete(isInitialized: Boolean, reason: String) {
         Log.d(TAG, "AdapterInit: $reason // $isInitialized")
         showToast("Adapter Initated")

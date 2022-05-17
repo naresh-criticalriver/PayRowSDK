@@ -2,6 +2,7 @@ package com.payrow.tappay
 
 interface PayRowAdapterListener {
 
+
    // public abstract fun registerEMVAdapterListener(listener: EMVAdapterListener)
 
     public abstract fun onAdapterInitComplete(isInitialized: kotlin.Boolean, reason: kotlin.String): kotlin.Unit
