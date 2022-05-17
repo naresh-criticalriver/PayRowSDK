@@ -37,10 +37,25 @@ dependencies {
     implementation 'com.google.android.material:material:1.6.0'
 
     /* Wizzet library */
-    implementation files('libs/VisaSensoryBranding.aar')
+   /* implementation files('libs/VisaSensoryBranding.aar')
     implementation files('libs/wizzitEmvSdk-1.0-release.aar')
     implementation files('libs/wizzitEmvSdkMasterCard-1.0-release.aar')
-    implementation files('libs/wizzitEmvSdkVisa-1.0.6-release.aar')
+    implementation files('libs/wizzitEmvSdkVisa-1.0.6-release.aar')*/
+
+    api(name:'sonic_sdk_release_1.3.0', ext:'aar')
+    api(name:'visasensorybranding', ext:'aar')
+    api(name:'wizzit_emv_sdk_1.0_release', ext:'aar')
+    api(name:'wizzit_emv_sdkmastercard_1.0_release', ext:'aar')
+    api(name:'wizzit_emv_sdkvisa_1.0.6_release', ext:'aar')
+
+    implementation "androidx.security:security-crypto:1.0.0-rc01"
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.5.0'
+
+    implementation 'org.bouncycastle:bcpkix-jdk15on:1.56'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

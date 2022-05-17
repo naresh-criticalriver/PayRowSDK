@@ -11,6 +11,11 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        flatDir {
+            // D:\AndroidProjects\PayRowAPP\PayRowLibrary\libs
+            // dirs('/src/main/libs')
+            dirs('/PayRowSDk/libs')
+        }
     }
 }
 rootProject.name = "SampleApp"

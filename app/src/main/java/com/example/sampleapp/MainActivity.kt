@@ -1,14 +1,14 @@
 package com.example.sampleapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.telephony.mbms.MbmsErrors
 import android.util.Log
-import com.example.payrowlibrary.DashboardActivity
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.payrow.tappay.PayRowAdapterListener
 import com.payrow.tappay.PayRowConfig
 import com.payrow.tappay.PayRowEMVAdapter
 import java.text.DecimalFormat
+
 
 class MainActivity : AppCompatActivity(), PayRowAdapterListener {
 
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), PayRowAdapterListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        DashboardActivity.displayToast("Welcome", this)
+      //  DashboardActivity.displayToast("Welcome", this)
 
         val txtRefId = DecimalFormat("00000").format(txRef)
 
@@ -36,23 +36,23 @@ class MainActivity : AppCompatActivity(), PayRowAdapterListener {
             "00",
             false,
             "01",
-            merchantToken,
-            txtRefId,
-            amount
         )
 
         //Initializing PayRowAdapter
-       val payRowEMVAdapter= PayRowEMVAdapter(this, payRowConfig, this)
+       val payRowEMVAdapter= PayRowEMVAdapter()
+        payRowEMVAdapter.initPayRowAdapter(this, payRowConfig, this)
 
-              // payRowEMVAdapter.cancelEmvAdapterSession()
+      //  payRowEMVAdapter.initPayRowSession(  merchantToken, txtRefId, amount)
 
-        //If we click on cancel currentSession
-        PayRowEMVAdapter.cancelCurrentSession()
+//        For cancelling current session
+       // payRowEMVAdapter.cancelCurrentSession()
 
     }
 
+
     override fun onAdapterInitComplete(isInitialized: Boolean, reason: String) {
-        Log.d(TAG, " $reason // $isInitialized")
+        Log.d(TAG, "AdapterInit: $reason // $isInitialized")
+        showToast("Adapter Initated")
     }
 
     override fun onAdapterInitializing() {
@@ -83,11 +83,13 @@ class MainActivity : AppCompatActivity(), PayRowAdapterListener {
         merchantName: String,
         terminalId: String
     ) {
-        TODO("Not yet implemented")
+        Log.d(TAG, "$isRegistered // check Device Registration completed // $reason")
+
     }
 
     override fun onDeviceRegistrationComplete(isRegistered: Boolean, reason: String) {
-        TODO("Not yet implemented")
+       showToast("$isRegistered // Device Registration completed // $reason")
+        Log.d(TAG, "$isRegistered // Device Registration completed // $reason")
     }
 
     override fun onSessionComplete(
@@ -96,7 +98,8 @@ class MainActivity : AppCompatActivity(), PayRowAdapterListener {
         reason: String,
         sessionData: Map<String, String>
     ) {
-        TODO("Not yet implemented")
+        showToast("$statusCode // session completed // $reason")
+        Log.d(TAG, "$statusCode // session completed // $reason")
     }
 
     override fun onSessionCountdown(remainingSeconds: Int) {
@@ -104,10 +107,15 @@ class MainActivity : AppCompatActivity(), PayRowAdapterListener {
     }
 
     override fun onSessionInitComplete(isInitialized: Boolean, reason: String) {
-        TODO("Not yet implemented")
+        Log.d(TAG, " session init complete// $reason")
     }
 
     override fun onSessionTimeout() {
-        TODO("Not yet implemented")
+        Log.d(TAG, " session timeout")
+        showToast("session timeout")
+    }
+
+    fun showToast(msg:String){
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
     }
 }

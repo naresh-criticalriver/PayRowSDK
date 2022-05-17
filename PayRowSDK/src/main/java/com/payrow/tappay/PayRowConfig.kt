@@ -11,7 +11,7 @@ data class PayRowConfig (
     val mockAuthCode: String,
     val enforcePinCVM: Boolean,
     val mockStatusCode: String,
-    val merchantToken: String,
+    /*val merchantToken: String,
     val txtRefId: String,
-    val amount: Int
+    val amount: Int*/
 )

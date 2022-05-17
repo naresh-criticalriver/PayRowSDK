@@ -5,27 +5,15 @@ import com.wizzitdigital.emv.sdk.EMVAdapter
 import com.wizzitdigital.emv.sdk.EMVAdapterListener
 import com.wizzitdigital.emv.sdk.EMVCfgVars
 
-class PayRowEMVAdapter(
-    val activity: Activity,
-    val payRowConfig: PayRowConfig,
-    val  listener: PayRowAdapterListener
-) : EMVAdapterListener {
+class PayRowEMVAdapter() : EMVAdapterListener {
 
-
+    private var emvAdapter: EMVAdapter? = null
     private var emvAdapterListener: EMVAdapterListener? = null
     var payRowAdapterListener: PayRowAdapterListener? = null
     var initialised = false
     var amount = 0
     var refId = "0"
 
-    companion object{
-        private var emvAdapter: EMVAdapter? = null
-        fun cancelCurrentSession(){
-            emvAdapter?.let {
-                it.cancelSession()
-            }
-        }
-    }
 
     /**
      * Default values for config
@@ -51,13 +39,13 @@ class PayRowEMVAdapter(
     /**
      * Custom config params and init EMV Adapter
      */
-    init {
+    fun initPayRowAdapter(activity: Activity, payRowConfig: PayRowConfig, listener: PayRowAdapterListener) {
+
         payRowAdapterListener = listener
 
         registerListener(this)
 
         emvAdapter = EMVAdapter(activity, this)
-        emvAdapter!!.setAdapterActivity(activity)
         emvAdapter!!.setConfig(EMVCfgVars.COUNTRY_CODE, payRowConfig.currencyCode) //0784 -DEFAULT
         emvAdapter!!.setConfig(EMVCfgVars.CURRENCY_CODE, payRowConfig.currencyCode) //0784 -DEFAULT
         emvAdapter!!.setConfig(EMVCfgVars.PIN_REQUIREMENT, payRowConfig.pinRequirement) //1 -DEFAULT
@@ -69,15 +57,14 @@ class PayRowEMVAdapter(
         emvAdapter!!.setConfig(EMVCfgVars.MOCK_AUTH_CODE, payRowConfig.mockAuthCode)//00 -DEFAULT
         emvAdapter!!.setConfig(EMVCfgVars.ENFORCE_PIN_CVM, payRowConfig.enforcePinCVM) //false -DEFAULT
         emvAdapter!!.setConfig(EMVCfgVars.MOCK_STATUS_CODE, payRowConfig.mockStatusCode) //01 -DEFAULT
-        emvAdapter?.initAdapter()
-
-        //Initializing EMV Adapter Session
-        emvAdapter?.initSession(payRowConfig.merchantToken,payRowConfig.txtRefId,payRowConfig.amount)
+        emvAdapter!!.setAdapterActivity(activity)
+        emvAdapter!!.initAdapter()
     }
 
-  /*  fun cancelEmvAdapterSession(){
-        emvAdapter?.cancelSession()
-    }*/
+    fun initPayRowSession(merchantToken: String, txtRefId: String, amount: Int) {
+        //Initializing EMV Adapter Session
+        emvAdapter?.initSession(merchantToken,txtRefId,amount)
+    }
 
     fun cancelCurrentSession(){
         emvAdapter?.cancelSession()
