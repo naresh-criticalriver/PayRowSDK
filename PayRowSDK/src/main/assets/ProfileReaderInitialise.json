@@ -1,0 +1,61 @@
+// Derived from Terminal Simulator Profiles.txt  * $Revision:   1.20  $
+// These profiles are a list of terminal data elements that are passed to the reader once only on initialisation
+//  if the profile is changed, the reader is reset and re-initialised
+//  if a value is present, then the terminal database is also updated
+{"READER_INITIALISE_PROFILES" : [{
+    "name": "initTCC56IDSN",
+    "data": [{
+        "tag": "9F1A",
+        "name": "Terminal Country Code",
+        "value": "0056"
+    }, {
+        "tag": "9F1E",
+        "name": "Interface Device Serial Number"
+    }]
+}, {
+    "name": "initTCC56",
+    "data": [{
+        "tag": "9F1A",
+        "name": "Terminal Country Code",
+        "value": "0056"
+    }]
+}, {
+    "name": "initIDSN",
+    "data": [{
+        "tag": "9F1E",
+        "name": "Interface Device Serial Number"
+    }]
+}, {
+    "name": "initGenTerm",
+    "data": [{
+        "tag": "9F1E",
+        "name": "Interface Device Serial Number"
+    }, {
+        "tag": "9F33",
+        "name": "Terminal Capabilities"
+    }, {
+        "tag": "9F40",
+        "name": "Additional Terminal Capabilities"
+    }, {
+        "tag": "9F15",
+        "name": "Merchant Category Code"
+    }, {
+        "tag": "9F1C",
+        "name": "Terminal Identification"
+    }, {
+        "tag": "9F35",
+        "name": "Terminal Type"
+    }, {
+        "tag": "9F1B",
+        "name": "Terminal Floor Limit"
+    }, {
+        "tag": "9F1A",
+        "name": "Terminal Country Code"
+    }, {
+        "tag": "9F1D",
+        "name": "Terminal Risk Management Data"
+    }]
+}, {
+    "name": "initNoData",
+    "data": []
+}]}

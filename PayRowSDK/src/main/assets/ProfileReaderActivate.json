@@ -1,0 +1,864 @@
+// Derived from Terminal Simulator Profiles.txt  * $Revision:   1.20  $
+// Tags to send in the Reader Activate command
+{"READER_ACTIVATE_PROFILES" : [{
+    "name": "MSTerm-Default",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }]
+}, {
+    "name": "MSTerm-EmptyAmount",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)",
+        "value": ""
+    }]
+}, {
+    "name": "MSTerm-NoAmount",
+    "data": []
+}, {
+    "name": "MCTerm-Default",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, { /* contact mode only: ignored in contactless mode */
+        "tag": "81",
+        "name": "Amount, Authorised (Binary)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, { /* contact mode only: ignored in contactless mode */
+        "tag": "9F04",
+        "name": "Amount, Other (Binary)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }]
+}, { /* Contact terminal */
+    "name": "MCCTerm-Default",
+    "data": [{
+        "tag": "5F57",
+        "name": "Account Type"
+    }, {
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "81",
+        "name": "Amount, Authorised (Binary)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F04",
+        "name": "Amount, Other (Binary)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }, {
+        "tag": "9F33",
+        "name": "Terminal Capabilities"
+    }, {
+        "tag": "9F35",
+        "name": "Terminal Type"
+    }, {
+        "tag": "9F40",
+        "name": "Additional Terminal Capabilities"
+    }, {
+        "tag": "9F41",
+        "name": "Transaction Sequence Counter"
+    }]
+}, {
+    "name": "MCTerm-NoAmount",
+    "data": [{
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }]
+}, {
+    "name": "MCTerm-EmptyAmount",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)",
+        "value": ""
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }]
+}, {
+    "name": "MCTerm-NoAmtOther",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }]
+}, {
+    "name": "MCTerm-NonZeroAmtOther",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)",
+        "value": "000000123456"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }]
+}, {
+    "name": "MCTerm-NoAOTCC2",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }]
+}, {
+    "name": "MCTerm-EmptyTCC",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code",
+        "value": ""
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }]
+}, {    
+    "name": "MCTerm-NoTType",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }]
+}, {
+    "name": "MCTerm-EmptyMCDAOTCC",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)",
+        "value": ""
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data",
+        "value": ""
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code",
+        "value": ""
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }]
+}, {
+    "name": "MCTerm-IncBalRBGAC",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }, {
+        "tag": "DF8104",
+        "name": "Balance Read Before Gen AC"
+    }]
+}, {
+    "name": "MCTerm-IncBalRBGAC1500",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }, {
+        "tag": "DF8104",
+        "name": "Balance Read Before Gen AC",
+        "value": "000000001500"
+    }]
+}, {
+    "name": "MCTerm-IncBalRBGAC1122...66",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }, {
+        "tag": "DF8104",
+        "name": "Balance Read Before Gen AC",
+        "value": "112233445566"
+    }]
+}, {
+    "name": "MCTerm-IncBalRAGAC",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }, {
+        "tag": "DF8105",
+        "name": "Balance Read After Gen AC"
+    }]
+}, {
+    "name": "MCTerm-IncBalRAGAC1520",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }, {
+        "tag": "DF8105",
+        "name": "Balance Read After Gen AC",
+        "value": "000000001520"
+    }]
+}, {
+    "name": "MCTerm-IncBalRAGAC3099",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }, {
+        "tag": "DF8105",
+        "name": "Balance Read After Gen AC",
+        "value": "000000003099"
+    }]
+}, {
+    "name": "MCTerm-IncBalRBandAGAC",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }, {
+        "tag": "DF8104",
+        "name": "Balance Read Before Gen AC"
+    }, {
+        "tag": "DF8105",
+        "name": "Balance Read After Gen AC"
+    }]
+}, {
+    "name": "MCTerm-IncBalRB1500A3099",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }, {
+        "tag": "DF8104",
+        "name": "Balance Read Before Gen AC",
+        "value": "000000001500"
+    }, {
+        "tag": "DF8105",
+        "name": "Balance Read After Gen AC",
+        "value": "000000003099"
+    }]
+}, {
+    "name": "MCTerm-DS_DEMO_INQ",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data",
+        "value": ""
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }, {
+        "tag": "9F5C",
+        "name": "DS Requested Operator ID"
+    }, {
+        "tag": "DF810D",
+        "name": "DSVN Term"
+    }]
+}, {
+    "name": "MCTerm-DS_DEMO_USE",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data",
+        "value": ""
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }, {
+        "tag": "9F5C",
+        "name": "DS Requested Operator ID"
+    }, {
+        "tag": "DF810D",
+        "name": "DSVN Term"
+    }]
+}, {
+    "name": "MCTerm-DS_DEMO_OI",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data",
+        "value": ""
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }, {
+        "tag": "9F5C",
+        "name": "DS Requested Operator ID"
+    }, {
+        "tag": "DF810D",
+        "name": "DSVN Term"
+    }]
+}, {
+    "name": "MCTerm-DS_DEMO_II",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data",
+        "value": ""
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }]
+}, {
+    "name": "MCTerm-DS_DEMO_IR",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data",
+        "value": ""
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }]
+}, {
+    "name": "MSTerm-NonTA-Default",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }]
+}, {
+    "name": "MCTerm-NonTA-Default",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, { /* contact mode only: ignored in contactless mode */
+        "tag": "81",
+        "name": "Amount, Authorised (Binary)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, { /* contact mode only: ignored in contactless mode */
+        "tag": "9F04",
+        "name": "Amount, Other (Binary)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }]
+}, {
+    "name": "MCCTerm-NonTA-Default",
+    "data": [{
+        "tag": "9F02",
+        "name": "Amount, Authorized (Numeric)"
+    }, {
+        "tag": "81",
+        "name": "Amount, Authorised (Binary)"
+    }, {
+        "tag": "9F03",
+        "name": "Amount, Other (Numeric)"
+    }, {
+        "tag": "9F04",
+        "name": "Amount, Other (Binary)"
+    }, {
+        "tag": "9F7C",
+        "name": "Merchant Custom Data"
+    }, {
+        "tag": "9F53",
+        "name": "Transaction Category Code"
+    }, {
+        "tag": "5F2A",
+        "name": "Transaction Currency Code"
+    }, {
+        "tag": "5F36",
+        "name": "Transaction Currency Exponent"
+    }, {
+        "tag": "9A",
+        "name": "Transaction Date"
+    }, {
+        "tag": "9F21",
+        "name": "Transaction Time"
+    }, {
+        "tag": "9C",
+        "name": "Transaction Type"
+    }, {
+        "tag": "9F41",
+        "name": "Transaction Sequence Counter"
+    }]
+}]}

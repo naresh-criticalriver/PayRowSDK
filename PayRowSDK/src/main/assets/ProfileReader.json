@@ -1,0 +1,3630 @@
+// Derived from Terminal Simulator Profiles.txt  * $Revision:   1.20  $
+// Reader profiles - list of AIDs with configuration data for each transaction type (see Table 2.13 reader v3 specification)
+// - an AID is supported if its first minlen bytes match the first minlen bytes of any AID in the selected combination.
+// - 'product' text is for information only and not currently used by the simulator
+// - 'asi' is the application selection indicator (true=partial match allowed, false=exact match ie ADF Name must have same length and value as AID)
+// - kernelID = '02'  ie KernelC2
+// NOTE: terminalTags format is "name:value", name must match name as per terminal.txt and allows these values to be modified dependent on selected profile
+//       termina; capabilities are   b1: key entry, magstripe, contact,xxxxx
+//                                   b2: PlaintextPIN, OnlinePIN, Signature, EncryptedOfflinePIN, NoCVM,xxx
+//                                   b3: SDA, DDA, CardCapture, x, CDA, xxx
+//
+//       additional capabilities are b1: cash (ATM flag), goods, services, cashback, enquiry, transfer, payment, admin
+//                                   b2: cash deposit, xxxxxxx
+//                                   b3: numeric, alpha, command, function keys, xxxx
+//                                   b4: print attend, print customer, display attend, display customer, xx, code table
+//                                   b5: code table
+
+{"READER_PROFILES" : [
+    {
+        "name": "MPOS",
+        "type": "Multi",
+        "initReaderData": "initNoData",
+        "contactlessMCProfile": "PPS_MChip1",
+        "terminalTags": ["Additional Terminal Capabilities:7000802000",
+            "Interface Device Serial Number:3031303031313031",
+            "Merchant Category Code:5812",
+            "Merchant Name and Location:4D65726368616E74204E616D65203A204C6F636174696F6E",  // Merchant Name : Location
+            "Terminal Country Code:0840",                         // ISO 3116 Country Code for USA
+            "Terminal Identification:3130313130303130",
+            "Transaction Category Code:52",                      // Retail Sale
+            "Terminal Type:21",                                  // Online only merchant attended
+            "Transaction Type:TRANSACTION_TYPE_PURCHASE"]
+    },
+    {
+    "name": "PPS_MChip1",
+    "show": "V3Test",
+    "type": "Single",
+    "initReaderData": "initTCC56IDSN",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010', //2203
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000", "TerminalRiskManagementData:6CFF000000000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000"]
+        }, {
+            "aid": 'A0000000049999',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_UNATTENDED_CASH],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCVMRequiredLimit:000000020000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCVMRequiredLimit:000000020000", "MagstripeCVMCapabilityCVMRequired:20"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "MagstripeCVMCapabilityCVMRequired:F0", "MagstripeCVMCapabilityNoCVMRequired:F0", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000020000", "TerminalRiskManagementData"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_REFUND],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000020000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }]
+}, {
+    "name": "PPS_MStripe1",
+    "show": "V3Test",
+    "type": "Single",
+    "initReaderData": "initTCC56",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000001000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000030000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000001000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000020000", "MagstripeCVMCapabilityCVMRequired:20"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000030000", "MagstripeCVMCapabilityCVMRequired:F0", "MagstripeCVMCapabilityNoCVMRequired:F0"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000020000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000030000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }]
+}, {
+    "name": "PPS_MS_HT0",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MStripe1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["MessageHoldTime:000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MessageHoldTime:000000"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["MessageHoldTime:000000"]
+        }]
+    }]
+}, {
+    "name": "PPS_MS_MSI_Allow_ACT",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MStripe1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["MSIKACT"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MSIKACT"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["MSIKACT"]
+        }]
+    }]
+}, {
+    "name": "PPS_MS_Limit_1",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MStripe1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000600000", "ReaderCVMRequiredLimit:000000005150", "ReaderContactlessFloorLimit:000000010000"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000001000", "ReaderCVMRequiredLimit:000000007500", "ReaderContactlessFloorLimit:000000020000"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000700000", "ReaderCVMRequiredLimit:000000010250", "ReaderContactlessFloorLimit:000000015000"]
+        }]
+    }]
+}, {
+    "name": "PPS_MS_Limit_2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MStripe1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000000200", "ReaderCTLOndevice:000000600000", "ReaderCVMRequiredLimit:000000005150", "ReaderContactlessFloorLimit:000000010000"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000000200", "ReaderCTLOndevice:000000001000", "ReaderCVMRequiredLimit:000000007500", "ReaderContactlessFloorLimit:000000020000"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000000200", "ReaderCTLOndevice:000000700000", "ReaderCVMRequiredLimit:000000010250", "ReaderContactlessFloorLimit:000000015000"]
+        }]
+    }]
+}, {
+    "name": "PPS_MS_Limit_3",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MStripe1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000002000", "ReaderCVMRequiredLimit:000000005150", "ReaderContactlessFloorLimit:000000010000"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000030000", "ReaderCVMRequiredLimit:000000007500", "ReaderContactlessFloorLimit:000000020000"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000040000", "ReaderCVMRequiredLimit:000000010250", "ReaderContactlessFloorLimit:000000015000"]
+        }]
+    }]
+}, {
+    "name": "PPS_MS_Limit_3b",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MStripe1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000002000", "ReaderCVMRequiredLimit:000000005150", "ReaderContactlessFloorLimit:000000010000", "KernelConfig:40"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000030000", "ReaderCVMRequiredLimit:000000007500", "ReaderContactlessFloorLimit:000000020000"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000040000", "ReaderCVMRequiredLimit:000000010250", "ReaderContactlessFloorLimit:000000015000"]
+        }]
+    }]
+}, {
+    "name": "PPS_MS_prop",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MStripe1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["MSprop"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MSprop"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["MSprop"]
+        }]
+    }]
+}, {
+    "name": "PPS_MS_prop2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MStripe1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["PCVC3Track2:1234"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["AFL:08010200"]
+        }]
+    }]
+}, {
+    // Note this profile is not applicable if the simulator is configured to support data exchange
+    "name": "PPS_MS_prop3",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MStripe1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["DSODSInfoprop"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MSprop"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["MSprop"]
+        }]
+    }]
+}, {
+    "name": "PPS_NoDefault_1",
+    "show": "V3Test",
+    "type": "Single",
+    "initReaderData": "initNoData",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysMS"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysMS"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysMS", "MagstripeCVMCapabilityCVMRequired:20"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysMS", "MagstripeCVMCapabilityCVMRequired:30", "MagstripeCVMCapabilityNoCVMRequired:30"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }]
+}, {
+    "name": "PPS_NoDefault_2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_NoDefault_1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000010000"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ReaderCTLOndevice:000000010000", "ReaderCVMRequiredLimit:000000005000", "KernelConfig:60"]
+        }]
+    }]
+}, {
+    "name": "PPS_NoDefault_3",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_NoDefault_1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000010000", "ReaderCVMRequiredLimit:000000005000", "KernelConfig:40", "MSNoCVM:10"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000010000", "ReaderCVMRequiredLimit:000000005000", "KernelConfig:40"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000010000", "ReaderCVMRequiredLimit:000000005000", "KernelConfig:60"]
+        }]
+    }]
+}, {
+    "name": "PPS_noMSI",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MStripe1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MobileSupportIndicator:02"]
+        }]
+    }]
+}, {
+    "name": "PPS_perf_MS",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MStripe1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000900000", "ReaderCVMRequiredLimit:000000900000"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000900000", "ReaderCVMRequiredLimit:000000900000"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000900000", "ReaderCVMRequiredLimit:000000900000"]
+        }]
+    }]
+}, {
+    "name": "PPS_Select1",
+    "show": "V3Test",
+    "type": "Single",
+    "initReaderData": "initTCC56IDSN",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000", "TerminalRiskManagementData:6CFF000000000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_UNATTENDED_CASH],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCVMRequiredLimit:000000020000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '17',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCVMRequiredLimit:000000020000", "MagstripeCVMCapabilityCVMRequired:20"]
+        }, {
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCVMRequiredLimit:000000020000", "MagstripeCVMCapabilityCVMRequired:20"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "MagstripeCVMCapabilityCVMRequired:F0", "MagstripeCVMCapabilityNoCVMRequired:F0", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '17',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '17',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000020000", "TerminalRiskManagementData"]
+        }, {
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000020000", "TerminalRiskManagementData"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '17',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_REFUND],
+        "supportedCombinations": [{
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_88],
+        "supportedCombinations": []
+    }]
+}, {
+    "name": "PPS_Bal",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC", "BalanceReadAfterGenAC"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC", "BalanceReadAfterGenAC"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC", "BalanceReadAfterGenAC"]
+        }]
+    }]
+}, {
+    "name": "PPS_Bal2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC:111111222222", "BalanceReadAfterGenAC:333333444444"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC:111111222222", "BalanceReadAfterGenAC:333333444444"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC:111111222222", "BalanceReadAfterGenAC:333333444444"]
+        }]
+    }]
+}, {
+    "name": "PPS_CVM_1",
+    "show": "V3Test",
+    "type": "Single",
+    "initReaderData": "initTCC56IDSN",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:22", "ReaderCTLNoOndevice:000000100000", "ReaderCTLOndevice:000000100000", "ReaderCVMRequiredLimit:000000001000", "CVMCapabilityCVMRequired:20", "CVMCapabilityNoCVMRequired:20", "TerminalRiskManagementData:6CFF000000000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "TerminalType:22", "ReaderCTLNoOndevice:000000100000", "ReaderCTLOndevice:000000100000", "ReaderCVMRequiredLimit:000000030000", "CVMCapabilityCVMRequired:08", "CVMCapabilityNoCVMRequired:08", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:22", "ReaderCTLNoOndevice:000000100000", "ReaderCTLOndevice:000000100000", "ReaderCVMRequiredLimit:000000001000", "CVMCapabilityCVMRequired:60", "CVMCapabilityNoCVMRequired:40"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_UNATTENDED_CASH],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCTLNoOndevice:000000100000", "ReaderCTLOndevice:000000100000", "ReaderCVMRequiredLimit:000000020000", "CVMCapabilityCVMRequired:40", "CVMCapabilityNoCVMRequired:40"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "KernelConfig:A0", "ReaderCTLNoOndevice:000000100000", "ReaderCTLOndevice:000000100000", "ReaderCVMRequiredLimit:000000030000", "CVMCapabilityCVMRequired:48", "CVMCapabilityNoCVMRequired:08", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCTLNoOndevice:000000100000", "ReaderCTLOndevice:000000100000", "ReaderCVMRequiredLimit:000000010000", "CVMCapabilityCVMRequired:60", "CVMCapabilityNoCVMRequired:00"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:22", "ReaderCTLNoOndevice:000000100000", "ReaderCTLOndevice:000000100000", "ReaderCVMRequiredLimit:000000020000", "CVMCapabilityCVMRequired:60", "CVMCapabilityNoCVMRequired:40", "TerminalRiskManagementData"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "TerminalType:22", "ReaderCTLNoOndevice:000000100000", "ReaderCTLOndevice:000000100000", "ReaderCVMRequiredLimit:000000030000", "CVMCapabilityCVMRequired:48", "CVMCapabilityNoCVMRequired:08", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:22", "ReaderCTLNoOndevice:000000100000", "ReaderCTLOndevice:000000100000", "ReaderCVMRequiredLimit:000000010000", "CVMCapabilityCVMRequired:00", "CVMCapabilityNoCVMRequired:00"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCTLNoOndevice:000000100000", "ReaderCTLOndevice:000000100000", "ReaderCVMRequiredLimit:000000020000", "MagstripeCVMCapabilityCVMRequired:20", "CVMCapabilityCVMRequired:60", "CVMCapabilityNoCVMRequired:08"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCTLNoOndevice:000000100000", "ReaderCTLOndevice:000000100000", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "MagstripeCVMCapabilityCVMRequired:30", "MagstripeCVMCapabilityNoCVMRequired:30", "CVMCapabilityCVMRequired:48", "CVMCapabilityNoCVMRequired:48", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCTLNoOndevice:000000100000", "ReaderCTLOndevice:000000100000", "ReaderCVMRequiredLimit:000000010000", "CVMCapabilityCVMRequired:00", "CVMCapabilityNoCVMRequired:40"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_REFUND],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000020000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }]
+}, {
+    "name": "PPS_CVM_2",
+    "show": "V3Test",
+    "type": "Single",
+    "initReaderData": "initTCC56IDSN",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000", "CVMCapabilityCVMRequired:F8", "CVMCapabilityNoCVMRequired:28", "TerminalRiskManagementData:6CFF000000000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_UNATTENDED_CASH],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCVMRequiredLimit:000000020000", "CVMCapabilityCVMRequired:F8", "CVMCapabilityNoCVMRequired:28"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000020000", "CVMCapabilityCVMRequired:F8", "CVMCapabilityNoCVMRequired:28", "TerminalRiskManagementData"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCVMRequiredLimit:000000020000", "MagstripeCVMCapabilityCVMRequired:20", "CVMCapabilityCVMRequired:F8", "CVMCapabilityNoCVMRequired:28"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "MagstripeCVMCapabilityCVMRequired:30", "MagstripeCVMCapabilityNoCVMRequired:30", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_REFUND],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000020000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }]
+}, {
+    "name": "PPS_Limit_1",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000002000", "ReaderContactlessFloorLimit:000000010000", "ReaderCVMRequiredLimit:000000005150"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000040000", "ReaderContactlessFloorLimit:000000020000", "ReaderCVMRequiredLimit:000000007500"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000060000", "ReaderContactlessFloorLimit:000000015000", "ReaderCVMRequiredLimit:000000010250", "KernelConfig:60"]
+        }]
+    }]
+}, {
+    "name": "PPS_Limit_1b",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000002000", "ReaderContactlessFloorLimit:000000010000", "ReaderCVMRequiredLimit:000000005150", "KernelConfig:00"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000040000", "ReaderContactlessFloorLimit:000000020000", "ReaderCVMRequiredLimit:000000007500", "KernelConfig:80"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000060000", "ReaderContactlessFloorLimit:000000015000", "ReaderCVMRequiredLimit:000000010250", "KernelConfig:60"]
+        }]
+    }]
+}, {
+    "name": "PPS_Limit_2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000020000", "ReaderCVMRequiredLimit:000000010000", "ReaderContactlessFloorLimit:000000015000"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000020000", "ReaderCVMRequiredLimit:000000012000", "ReaderContactlessFloorLimit:000000010000"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000010000", "ReaderCVMRequiredLimit:000000010000", "ReaderContactlessFloorLimit:000000010000"]
+        }]
+    }]
+}, {
+    "name": "PPS_Limit_3",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000600000", "ReaderCVMRequiredLimit:000000005150", "ReaderContactlessFloorLimit:000000010000"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000001000", "ReaderCVMRequiredLimit:000000007500", "ReaderContactlessFloorLimit:000000020000"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000700000", "ReaderCVMRequiredLimit:000000010250", "ReaderContactlessFloorLimit:000000015000", "KernelConfig:A0"]
+        }]
+    }]
+}, {
+    "name": "PPS_MC_ATM",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["AdditionalTerminalCapabilities:8000000000", "TerminalType:14"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["AdditionalTerminalCapabilities:8000000000", "TerminalType:15"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["AdditionalTerminalCapabilities:8000000000", "TerminalType:16"]
+        }]
+    }]
+}, {
+    "name": "PPS_MC_notATM",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TerminalType:11", "AdditionalTerminalCapabilities:FF00000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TerminalType:24", "AdditionalTerminalCapabilities:FF00000000"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TerminalType:14", "AdditionalTerminalCapabilities:7F00000000"]
+        }]
+    }]
+}, {
+    "name": "PPS_MC_prop",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["MCprop"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MCprop"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["MCprop"]
+        }]
+    }]
+}, {
+    "name": "PPS_MC_prop2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ApplicationExpirationDate:241115"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["AFL:08010200"]
+        }]
+    }]
+}, {
+    "name": "PPS_MCerrKernelConf",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["KernelConfig:C0"]
+        }]
+    }]
+}, {
+    "name": "PPS_MChip2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TACOnline:7CD8FCF8F0", "TerminalType:11"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TACOnline:7CD8FCF8F0", "TerminalType:12"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TACOnline:7CD8FCF8F0", "TerminalType:13"]
+        }]
+    }]
+}, {
+    "name": "PPS_MChip3",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TACDenial:7CD8FCF8F0", "TerminalType:14"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TACDenial:7CD8FCF8F0", "TerminalType:15"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TACDenial:7CD8FCF8F0", "TerminalType:16"]
+        }]
+    }]
+}, {
+    "name": "PPS_MChip4",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TACOnline:0020000000", "TerminalType:21"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TACOnline:0020000000", "TerminalType:22"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TACOnline:0020000000", "TerminalType:23"]
+        }]
+    }]
+}, {
+    "name": "PPS_MChip5",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TACDenial:0020000000", "TerminalType:24"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TACDenial:0020000000", "TerminalType:25"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TACDenial:0020000000", "TerminalType:26"]
+        }]
+    }]
+}, {
+    "name": "PPS_MChip6",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TACDefault:0040000000", "TerminalType:34"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TACDefault:0040000000", "TerminalType:35"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TACDefault:0040000000", "TerminalType:36"]
+        }]
+    }]
+}, {
+    "name": "PPS_MChip7",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TerminalType:11"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TerminalType:12"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TerminalType:13"]
+        }]
+    }]
+}, {
+    "name": "PPS_MChip8",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["CardDataInputCapability:20"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["CardDataInputCapability:20"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["CardDataInputCapability:20"]
+        }]
+    }]
+}, {
+    "name": "PPS_MCnoDefault_1",
+    "show": "V3Test",
+    "type": "Single",
+    "initReaderData": "initIDSN",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "TerminalRiskManagementData:6CFF000000000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "KernelConfig:20", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "TerminalRiskManagementData"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "KernelConfig:20", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "KernelConfig:20", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876"]
+        }]
+    }]
+}, {
+    "name": "PPS_MCnoDefault_2",
+    "show": "V3Test",
+    "type": "Single",
+    "initReaderData": "initNoData",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "TerminalRiskManagementData:6CFF000000000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "KernelConfig:20", "ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "ReaderCVMRequiredLimit:000000005000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "ReaderCVMRequiredLimit:000000005000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "TerminalRiskManagementData"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "KernelConfig:20", "ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "ReaderCVMRequiredLimit:000000005000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "ReaderCVMRequiredLimit:000000005000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "KernelConfig:20", "ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "ReaderCVMRequiredLimit:000000005000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["NoDefaultAlwaysOrEMVMC", "ApplicationDiscretionaryData:9876", "ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "ReaderCVMRequiredLimit:000000005000"]
+        }]
+    }]
+}, {
+    "name": "PPS_MCnoDefault_3",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MCnoDefault_1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "TACDenial:0000000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "ReaderCVMRequiredLimit:000000005000", "SecurityCapability:08", "TACDenial:0000000000"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "ReaderCVMRequiredLimit:000000005000", "SecurityCapability:08", "TACDenial:0000000000"]
+        }]
+    }]
+}, {
+    "name": "PPS_MCnoDefault_4",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MCnoDefault_1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "TerminalType:23", "TACDenial:0000000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "TerminalType:23", "ReaderCVMRequiredLimit:000000005000", "SecurityCapability:08", "TACDenial:0000000000"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ReaderCTLNoOndevice:000000010000", "ReaderCTLOndevice:000000010000", "TerminalType:23", "ReaderCVMRequiredLimit:000000005000", "SecurityCapability:08"]
+        }]
+    }]
+}, {
+    "name": "PPS_MCnoDefault_5",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MCnoDefault_2",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MSNoCVM:10"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["MSNoCVM:10"]
+        }]
+    }]
+}, {
+    "name": "PPS_MCnoMSI",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ApplicationVersionNumberReader:0003"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MobileSupportIndicator:02"]
+        }]
+    }]
+}, {
+    "name": "PPS_MConlineonly",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TerminalType:11"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TerminalType:11", "SecurityCapability:00"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TerminalType:11"]
+        }]
+    }]
+}, {
+    "name": "PPS_perf_MC",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["AdditionalTerminalCapabilities:6000F00001", "CardDataInputCapability:60", "ReaderContactlessFloorLimit:000000900000", "ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000900000", "ReaderCVMRequiredLimit:000000900000", "TACDefault:0400800000", "TACDenial:DC50000000", "TerminalType:26"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["AdditionalTerminalCapabilities:6000F00001", "CardDataInputCapability:60", "ReaderContactlessFloorLimit:000000900000", "ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000900000", "ReaderCVMRequiredLimit:000000900000", "TACDefault:0400800000", "TACDenial:DC50000000", "TerminalType:26"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["AdditionalTerminalCapabilities:6000F00001", "CardDataInputCapability:60", "ReaderContactlessFloorLimit:000000900000", "ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000900000", "ReaderCVMRequiredLimit:000000900000", "TACDefault:0400800000", "TACDenial:DC50000000", "TerminalType:26"]
+        }]
+    }]
+}, {
+    "name": "PPS_PostBal",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenACNotPresent", "BalanceReadAfterGenAC"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenACNotPresent", "BalanceReadAfterGenAC"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenACNotPresent", "BalanceReadAfterGenAC"]
+        }]
+    }]
+}, {
+    "name": "PPS_PostBal2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenACNotPresent", "BalanceReadAfterGenAC:112233445566"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenACNotPresent", "BalanceReadAfterGenAC:112233445566"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenACNotPresent", "BalanceReadAfterGenAC:112233445566"]
+        }]
+    }]
+}, {
+    "name": "PPS_PreBal",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC", "BalanceReadAfterGenACNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC", "BalanceReadAfterGenACNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC", "BalanceReadAfterGenACNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPS_PreBal2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC:000088776655", "BalanceReadAfterGenACNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC:000088776655", "BalanceReadAfterGenACNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC:000088776655", "BalanceReadAfterGenACNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPS_RRP",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["KernelConfig:30"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["KernelConfig:B0"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["KernelConfig:30"]
+        }]
+    }]
+}, {
+    "name": "PPS_RRP2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["KernelConfig:30", "RRPrExpectedCAPDU:0FA0"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["KernelConfig:B0", "RRPrExpectedCAPDU:0FA0"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["KernelConfig:30", "RRPrExpectedCAPDU:0FA0"]
+        }]
+    }]
+}, {
+    "name": "PPS_RRP3",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["KernelConfig:30", "RRPrExpectedRAPDU:0FA0"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["KernelConfig:B0", "RRPrExpectedRAPDU:0FA0"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["KernelConfig:30", "RRPrExpectedRAPDU:0FA0"]
+        }]
+    }]
+}, {
+    "name": "PPS_RRP4",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["KernelConfig:30", "RRPrMinGrace:0FA0"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["KernelConfig:B0", "RRPrMinGrace:0FA0"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["KernelConfig:30", "RRPrMinGrace:0FA0"]
+        }]
+    }]
+}, {
+    "name": "PPS_RRP5",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["KernelConfig:30", "RRPrMaxGrace:0960"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["KernelConfig:B0", "RRPrMaxGrace:0960"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["KernelConfig:30", "RRPrMaxGrace:0960"]
+        }]
+    }]
+}, {
+    "name": "PPS_RRP6",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["KernelConfig:30", "RRPrAccuracyThreshold:0FA0"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["KernelConfig:B0", "RRPrAccuracyThreshold:0FA0"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["KernelConfig:30", "RRPrAccuracyThreshold:0FA0"]
+        }]
+    }]
+}, {
+    "name": "PPS_TIP_offline",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TACDenial:FC50808000", "TACOnline:0000000000", "TACDefault:0000000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TACDenial:FC50808000", "TACOnline:0000000000", "TACDefault:0000000000"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TACDenial:FC50808000", "TACOnline:0000000000", "TACDefault:0000000000"]
+        }]
+    }]
+}, {
+    "name": "PPS_TIP_online",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TACDenial:0000000000", "TACOnline:FC509C8800", "TACDefault:FC509C8800"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TACDenial:0000000000", "TACOnline:FC509C8800", "TACDefault:FC509C8800"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TACDenial:0000000000", "TACOnline:FC509C8800", "TACDefault:FC509C8800"]
+        }]
+    }]
+}, {
+    "name": "PPS_Torn_Bal",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC", "BalanceReadAfterGenAC", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC", "BalanceReadAfterGenAC", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC", "BalanceReadAfterGenAC", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01"]
+        }]
+    }]
+}, {
+    "name": "PPS_Torn3min",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:00B4", "MaxNumberOfTornTransactionLogRecords:02", "KernelConfig:30"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:00B4", "MaxNumberOfTornTransactionLogRecords:02", "KernelConfig:30"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:00B4", "MaxNumberOfTornTransactionLogRecords:02", "KernelConfig:30"]
+        }]
+    }]
+}, {
+    "name": "PPS_Torn5sec",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0005", "MaxNumberOfTornTransactionLogRecords:02"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0005", "MaxNumberOfTornTransactionLogRecords:02"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0005", "MaxNumberOfTornTransactionLogRecords:02"]
+        }]
+    }]
+}, {
+    "name": "PPS_TornMax1",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01"]
+        }]
+    }]
+}, {
+    "name": "PPS_TornMax1RRP",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01", "KernelConfig:30"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01", "KernelConfig:B0"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01", "KernelConfig:30"]
+        }]
+    }]
+}, {
+    "name": "PPS_TornMax1_contact",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01", "CardDataInputCapability:20"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01", "CardDataInputCapability:20"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01", "CardDataInputCapability:20"]
+        }]
+    }]
+}, {
+    "name": "PPS_TornMax2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02"]
+        }]
+    }]
+}, {
+    "name": "PPS_TrxTypeOther",
+    "show": "V3Test",
+    "type": "Single",
+    "initReaderData": "initTCC56IDSN",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000", "TerminalRiskManagementData:6CFF000000000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_CASH_DEPOSIT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000", "TerminalRiskManagementData:6CFF000000000000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_12],
+        "supportedCombinations": [{
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000025000", "TerminalRiskManagementData:44FF800000000000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_UNATTENDED_CASH],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCVMRequiredLimit:000000020000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCVMRequiredLimit:000000020000", "MagstripeCVMCapabilityCVMRequired:20"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "MagstripeCVMCapabilityCVMRequired:30", "MagstripeCVMCapabilityNoCVMRequired:30", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000020000", "TerminalRiskManagementData"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_REFUND],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000020000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000010000"]
+        }]
+    }]
+}, {
+    "name": "TermSettingC-2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPS_MChip1",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["AdditionalTerminalCapabilities:6000F00001", "CardDataInputCapability:60", "ReaderContactlessFloorLimit:000000900000", "ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000900000", "ReaderCVMRequiredLimit:000000900000", "TACDefault:0400800000", "TACDenial:DC50000000", "TerminalType:26", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02", "ProprietaryTagD7:02"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["AdditionalTerminalCapabilities:6000F00001", "CardDataInputCapability:60", "ReaderContactlessFloorLimit:000000900000", "ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000900000", "ReaderCVMRequiredLimit:000000900000", "TACDefault:0400800000", "TACDenial:DC50000000", "TerminalType:26", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02", "ProprietaryTagD7:02"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["AdditionalTerminalCapabilities:6000F00001", "CardDataInputCapability:60", "ReaderContactlessFloorLimit:000000900000", "ReaderCTLNoOndevice:000000900000", "ReaderCTLOndevice:000000900000", "ReaderCVMRequiredLimit:000000900000", "TACDefault:0400800000", "TACDenial:DC50000000", "TerminalType:26", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02", "ProprietaryTagD7:02"]
+        }]
+    }]
+}, {
+    "name": "PPMS_DEreferce",
+    "show": "V3Test",
+    "type": "Single",
+    "initReaderData": "initTCC56",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000001000", "ProceedToFirstWriteFlag:00"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000030000", "ProceedToFirstWriteFlag:00"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000001000", "ProceedToFirstWriteFlag:00"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000020000", "MagstripeCVMCapabilityCVMRequired:20", "ProceedToFirstWriteFlag:00"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000030000", "MagstripeCVMCapabilityCVMRequired:30", "MagstripeCVMCapabilityNoCVMRequired:30", "ProceedToFirstWriteFlag:00"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000010000", "ProceedToFirstWriteFlag:00"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000020000", "ProceedToFirstWriteFlag:00"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000030000", "ProceedToFirstWriteFlag:00"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessMagStripe", "ReaderCVMRequiredLimit:000000010000", "ProceedToFirstWriteFlag:00"]
+        }]
+    }]
+}, {
+    "name": "PPMS_DE1",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMS_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToRead", "ProprietaryTagC7:AABBCCDD"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToRead", "ProprietaryTagC7:AABBCCDD"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToRead", "ProprietaryTagC7:AABBCCDD"]
+        }]
+    }]
+}, {
+    "name": "PPMS_DE2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMS_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53"]
+        }]
+    }]
+}, {
+    "name": "PPMS_DE3",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMS_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F5350875F2D"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F5350875F2D"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F5350875F2D"]
+        }]
+    }]
+}, {
+    "name": "PPMS_DE4",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMS_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F538294"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F538294"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F538294"]
+        }]
+    }]
+}, {
+    "name": "PPMS_DE5",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMS_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F5350875F2D8294"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F5350875F2D8294"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F5350875F2D8294"]
+        }]
+    }]
+}, {
+    "name": "PPMS_DE6",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMS_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag"]
+        }]
+    }]
+}, {
+    "name": "PPMS_DE7",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMS_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToRead:5A"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToRead:5A"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToRead:5A"]
+        }]
+    }]
+}, {
+    "name": "PPMS_DE8",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMS_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToRead"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToRead"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToRead"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DEreferce",
+    "show": "V3Test",
+    "type": "Single",
+    "initReaderData": "initTCC56IDSN",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "TerminalRiskManagementData:6CFF000000000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_UNATTENDED_CASH],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCVMRequiredLimit:000000020000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCVMRequiredLimit:000000010000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCVMRequiredLimit:000000020000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "MagstripeCVMCapabilityCVMRequired:20"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "MagstripeCVMCapabilityCVMRequired:30", "MagstripeCVMCapabilityNoCVMRequired:30", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCVMRequiredLimit:000000010000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000020000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "TerminalRiskManagementData"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000010000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_REFUND],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000020000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000010000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR_referce",
+    "show": "V3Test",
+    "type": "Single",
+    "initReaderData": "initTCC56IDSN",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD", "TerminalRiskManagementData:6CFF000000000000"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000001000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_UNATTENDED_CASH],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCVMRequiredLimit:000000020000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:14", "ReaderCVMRequiredLimit:000000010000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCVMRequiredLimit:000000020000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD", "MagstripeCVMCapabilityCVMRequired:20"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD", "MagstripeCVMCapabilityCVMRequired:30", "MagstripeCVMCapabilityNoCVMRequired:30", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "TerminalType:11", "ReaderCVMRequiredLimit:000000010000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000020000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD", "TerminalRiskManagementData"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000010000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD"]
+        }]
+    }, {
+        "transactionType": [TRANSACTION_TYPE_REFUND],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "minlen": 7,
+            "product": 'MasterCard credit or debit',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000020000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD"]
+        }, {
+            "aid": 'A0000000043060',
+            "minlen": 7,
+            "product": 'Maestro',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "KernelConfig:A0", "ReaderCVMRequiredLimit:000000030000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD", "TerminalRiskManagementData:44FF800000000000"]
+        }, {
+            "aid": 'B012345678',
+            "minlen": 5,
+            "product": 'MasterCard Test',
+            "asi": true,
+            "kernelID": '02',
+            "data": ["DefaultTAContactlessEMV", "ReaderCVMRequiredLimit:000000010000", "DSRequestedOperatorID:7A45123EE59C7F40", "DSVNTerm:02", "ProceedToFirstWriteFlag:00", "ProtectedDataEnvelopesNoValue", "UnprotectedDataEnvelopesNoValue", "ProprietaryTag5F53", "TagsToRead:5F53", "ProprietaryTagC7:AABBCCDD"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DE1",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F539F5D9F75"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F539F5D9F75"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F539F5D9F75"]
+        }]
+    }]
+}, {
+    // This profile updated due to test environment document 5/12/12 where 5F53 is now zero length not value '00'
+    "name": "PPMC_DE2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F539F5D9F759F769F779F789F79"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F539F5D9F759F769F779F789F79"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F539F5D9F759F769F779F789F79"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DE3",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:5F215A", "ProprietaryTag5F21NotPresent", "DSRequestedOperatorID"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:5F215A", "ProprietaryTag5F21NotPresent", "DSRequestedOperatorID"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:5F215A", "ProprietaryTag5F21NotPresent", "DSRequestedOperatorID"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DE4",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F539F5D9F759F769F779F789F79", "ProceedToFirstWriteFlag"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F539F5D9F759F769F779F789F79", "ProceedToFirstWriteFlag"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F539F5D9F759F769F779F789F79", "ProceedToFirstWriteFlag"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DE5",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["DSRequestedOperatorIDNotPresent", "ProceedToFirstWriteFlag"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["DSRequestedOperatorIDNotPresent", "ProceedToFirstWriteFlag"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["DSRequestedOperatorIDNotPresent", "ProceedToFirstWriteFlag"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DE6",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DE7",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag", "DSID"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag", "DSID"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag", "DSID"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DE8",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag", "ApplicationCapabilitiesInformation"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag", "ApplicationCapabilitiesInformation"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag", "ApplicationCapabilitiesInformation"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DE9",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToRead:5A", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToRead:5A", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToRead:5A", "DSRequestedOperatorIDNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DE10",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:C1C2C3C4C5C65A", "ProprietaryTagC1", "ProprietaryTagC2", "ProprietaryTagC3", "ProprietaryTagC4", "ProprietaryTagC5", "ProprietaryTagC6", "DSRequestedOperatorID"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:C1C2C3C4C5C65A", "ProprietaryTagC1", "ProprietaryTagC2", "ProprietaryTagC3", "ProprietaryTagC4", "ProprietaryTagC5", "ProprietaryTagC6", "DSRequestedOperatorID"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:C1C2C3C4C5C65A", "ProprietaryTagC1", "ProprietaryTagC2", "ProprietaryTagC3", "ProprietaryTagC4", "ProprietaryTagC5", "ProprietaryTagC6", "DSRequestedOperatorID"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DE_RRP",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["KernelConfig:30"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["KernelConfig:B0"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["KernelConfig:30"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DE_Torn_Empty",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:00"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:00"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:00"]
+        }]
+    }]
+}, {
+    "name": "PPMC_IDS_Torn",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02"]
+        }]
+    }]
+}, {
+    "name": "PPMC_IDS_TornBalance",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02", "BalanceReadBeforeGenAC", "BalanceReadAfterGenAC"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02", "BalanceReadBeforeGenAC", "BalanceReadAfterGenAC"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02", "BalanceReadBeforeGenAC", "BalanceReadAfterGenAC"]
+        }]
+    }]
+}, {
+    "name": "PPMC_IDS_TornMax1",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "TagsToRead:5F53", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:01"]
+        }]
+    }]
+}, {
+    "name": "PPMC_SDS_Torn",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DEreferce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "ProceedToFirstWriteFlagNotPresent", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02", "ProtectedDataEnvelopesNotPresent", "UnprotectedDataEnvelopesNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "ProceedToFirstWriteFlagNotPresent", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02", "ProtectedDataEnvelopesNotPresent", "UnprotectedDataEnvelopesNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProprietaryTag5F53", "ProceedToFirstWriteFlagNotPresent", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02", "ProtectedDataEnvelopesNotPresent", "UnprotectedDataEnvelopesNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR1",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToRead:9F47"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToRead:9F47"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToRead:9F47"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR2",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["DSRequestedOperatorID:7345123215904501"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["DSRequestedOperatorID:7345123215904501"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["DSRequestedOperatorID:7345123215904501"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR3",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "DSRequestedOperatorID:7345123215904501"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "DSRequestedOperatorID:7345123215904501"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "DSRequestedOperatorID:7345123215904501"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR4",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToRead"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToRead"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToRead"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR5",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F5350875F2D"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F5350875F2D"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F5350875F2D"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR6",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F538294"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F538294"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F538294"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR7",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F5350875F2D8294"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F5350875F2D8294"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F5350875F2D8294"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR8",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F53", "TagsToWriteBeforeGenAC"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F53", "TagsToWriteBeforeGenAC"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F53", "TagsToWriteBeforeGenAC"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR9",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToWriteBeforeGenAC:9F753000112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF9F7630FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToWriteBeforeGenAC:9F753000112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF9F7630FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToWriteBeforeGenAC:9F753000112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF9F7630FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR10",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToWriteAfterGenAC"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToWriteAfterGenAC"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToWriteAfterGenAC"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR11",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToWriteAfterGenAC:9F753000112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF9F7630FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToWriteAfterGenAC:9F753000112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF9F7630FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToWriteAfterGenAC:9F753000112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF9F7630FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR12",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "DSVNTerm:88776655"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "DSVNTerm:88776655"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "DSVNTerm:88776655"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR13",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:5F5382", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:5F5382", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:5F5382", "DSRequestedOperatorIDNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR14",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag:01", "TagsToRead:5F5382", "DSRequestedOperatorID:0000000000000000", "DSVNTerm"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag:01", "TagsToRead:5F5382", "DSRequestedOperatorID:0000000000000000", "DSVNTerm"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag:01", "TagsToRead:5F5382", "DSRequestedOperatorID:0000000000000000", "DSVNTerm"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR15",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag:01", "TagsToRead:5F5382", "DSVNTerm"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag:01", "TagsToRead:5F5382", "DSVNTerm"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag:01", "TagsToRead:5F5382", "DSVNTerm"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR16",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:5F5382", "DSRequestedOperatorIDNotPresent", "DSVNTermNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:5F5382", "DSRequestedOperatorIDNotPresent", "DSVNTermNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:5F5382", "DSRequestedOperatorIDNotPresent", "DSVNTermNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR17",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToWriteBeforeGenAC", "TagsToRead:9F475A", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToWriteBeforeGenAC", "TagsToRead:9F475A", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToWriteBeforeGenAC", "TagsToRead:9F475A", "DSRequestedOperatorIDNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR18",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:9F47", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:9F47", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlagNotPresent", "TagsToRead:9F47", "DSRequestedOperatorIDNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR19",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag", "TagsToRead:9F4782", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag", "TagsToRead:9F4782", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag", "TagsToRead:9F4782", "DSRequestedOperatorIDNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR20",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F5382"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F5382"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F5382"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR21",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC:000000000000", "BalanceReadAfterGenAC:000000000000", "DSInputTermNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC:000000000000", "BalanceReadAfterGenAC:000000000000", "DSInputTermNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["BalanceReadBeforeGenAC:000000000000", "BalanceReadAfterGenAC:000000000000", "DSInputTermNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR22",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProprietaryTagC7"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProprietaryTagC7"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProprietaryTagC7"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR23",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag", "TagsToRead:5F535A", "ProprietaryTag5F21"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag", "TagsToRead:5F535A", "ProprietaryTag5F21"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["ProceedToFirstWriteFlag", "TagsToRead:5F535A", "ProprietaryTag5F21"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR24",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F535A"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F535A"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToRead:5F535A"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR25",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "ProceedToFirstWriteFlagNotPresent", "DSRequestedOperatorID"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "ProceedToFirstWriteFlagNotPresent", "DSRequestedOperatorID"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "ProceedToFirstWriteFlagNotPresent", "DSRequestedOperatorID"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR26",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "DSRequestedOperatorIDNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR27",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "ProceedToFirstWriteFlag:01", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "ProceedToFirstWriteFlag:01", "DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "ProceedToFirstWriteFlag:01", "DSRequestedOperatorIDNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR28",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "ApplicationVersionNumberReaderNotPresent", "TACOnlineNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "ApplicationVersionNumberReaderNotPresent", "TACOnlineNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToReadNotPresent", "ApplicationVersionNumberReaderNotPresent", "TACOnlineNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR29",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["DSRequestedOperatorIDNotPresent"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["DSRequestedOperatorIDNotPresent"]
+        }]
+    }]
+}, {
+    "name": "PPMC_DETTR_RRP",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["KernelConfig:30"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["KernelConfig:B0"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["KernelConfig:30"]
+        }]
+    }]
+}, {
+    "name": "PPMC_SDSTTR_Torn",
+    "show": "V3Test",
+    "type": "Single",
+    "basedOn": "PPMC_DETTR_referce",
+    "transactionData": [{
+        "transactionType": [TRANSACTION_TYPE_PURCHASE, TRANSACTION_TYPE_UNATTENDED_CASH, TRANSACTION_TYPE_PURCHASE_WITH_CASHBACK, TRANSACTION_TYPE_REFUND, TRANSACTION_TYPE_CASH_DISBURSEMENT],
+        "supportedCombinations": [{
+            "aid": 'A0000000041010',
+            "kernelID": '02',
+            "data": ["TagsToWriteAfterGenAC:9F753000112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF9F7630FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02"]
+        }, {
+            "aid": 'A0000000043060',
+            "kernelID": '02',
+            "data": ["TagsToWriteAfterGenAC:9F753000112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF9F7630FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02"]
+        }, {
+            "aid": 'B012345678',
+            "kernelID": '02',
+            "data": ["TagsToWriteAfterGenAC:9F753000112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF9F7630FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100", "MaxLifetimeOfTornTransactionLogRecord:0E10", "MaxNumberOfTornTransactionLogRecords:02"]
+        }]
+    }]
+}]}
