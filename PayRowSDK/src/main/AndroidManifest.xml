@@ -2,4 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.payrow.tappay">
 
+    <application>
+        <activity
+            android:name=".PayRowActivity"
+            android:exported="false" />
+    </application>
+
 </manifest>
