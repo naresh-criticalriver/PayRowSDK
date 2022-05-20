@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.Toast
-import android.widget.ViewAnimator
+import android.widget.*
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.wizzitdigital.emv.sdk.EMVAdapter
 import com.wizzitdigital.emv.sdk.EMVAdapterListener
@@ -69,7 +67,6 @@ class PayRowActivity : AppCompatActivity(), EMVAdapterListener {
     private fun initPayRowSession() {
         Log.d(TAG,"EMV Session Started")
        // showToast("EMV Session Started")
-
         runOnUiThread {
          try {
              amount *= 100
@@ -139,9 +136,39 @@ class PayRowActivity : AppCompatActivity(), EMVAdapterListener {
 
     override fun onSessionInitComplete(isInitialized: Boolean, reason: String) {
         Log.d(TAG,"SessionInitComplete  $isInitialized  // $reason")
+        try {
+            txRef += 1
+            //Not implemented
+            if (isInitialized) {
+                runOnUiThread {
+                    setContentView(R.layout.tap_to_pay)
+                    (findViewById<TextView>(R.id.textViewTransactionRef)).text =
+                        DecimalFormat("00000").format(txRef)
+                    (findViewById<TextView>(R.id.textViewAmount)).text = formatAmount()
+                    val btnCancel = findViewById<Button>(R.id.buttonCancel)
+                    btnCancel.setOnClickListener {
+                        cancelSessionClicked()
+                    }
+                }
+            }
+        } catch (ex: Exception) {
+
+        }
     }
 
     override fun onSessionTimeout() {
         Log.d(TAG,"Session Timeout")
+    }
+
+    private fun formatAmount(): String {
+        val decim = DecimalFormat("0.00")
+        return decim.format(amount.toDouble())
+    }
+
+    private fun cancelSessionClicked() {
+        try {
+            emvAdapter?.cancelSession()
+        } catch (ex: Exception) {
+        }
     }
 }

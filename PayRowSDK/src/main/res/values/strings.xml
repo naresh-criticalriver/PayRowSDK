@@ -1,1 +1,4 @@
-<resources></resources>
+<resources>
+    <string name="please_wait">Please Wait</string>
+    <string name="payrow_footer"><![CDATA[&#169;2021 PayRow Company. All Rights Reserved]]></string>
+</resources>
