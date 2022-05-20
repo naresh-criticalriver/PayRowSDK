@@ -1,6 +1,8 @@
 package com.payrow.tappay
 
+import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -22,13 +24,24 @@ class PayRowActivity : AppCompatActivity(), EMVAdapterListener {
     private val TAG=PayRowActivity::class.simpleName
     private var countdownInterfaceInitialized = false
 
+    companion object{
+        val PAYROW_RESULT_CODE=100
+        val TXT_REF_ID="txRefId"
+        val AMOUNT = "amount"
+        val RESULT_MSG="result message"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pay_row)
 
-        txRef = intent.getIntExtra("txRefId",0)
+        txRef = intent.getIntExtra(TXT_REF_ID,0)
 
-        amount=intent.getIntExtra("amount",0)
+        amount=intent.getIntExtra(AMOUNT,0)
+
+        runOnUiThread {
+            setContentView(R.layout.init_adapter)
+        }
 
         progressBar = findViewById(R.id.progressBar_Initalizing)
         showProgressBar("Initializing")
@@ -153,6 +166,9 @@ class PayRowActivity : AppCompatActivity(), EMVAdapterListener {
     ) {
         Log.d(TAG,"SessionInitComplete  $isSuccessful  // $reason")
         showToast(reason)
+        val intent = Intent()
+        intent.putExtra(RESULT_MSG,reason)
+        setResult(Activity.RESULT_OK,intent)
         finish()
     }
 
