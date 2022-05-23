@@ -35,6 +35,8 @@ class PayRowActivity : AppCompatActivity(), EMVAdapterListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pay_row)
 
+        showToast("Don't press back button while processing")
+
         txRef = intent.getIntExtra(TXT_REF_ID,0)
 
         amount=intent.getIntExtra(AMOUNT,0)
@@ -91,8 +93,16 @@ class PayRowActivity : AppCompatActivity(), EMVAdapterListener {
              )
          }catch (e:Exception){
              Log.d(TAG,"Exception "+e.message)
+             finishPayRowActivity(e.message)
          }
         }
+    }
+
+    private fun finishPayRowActivity(message: String?) {
+        val intent = Intent()
+        intent.putExtra(RESULT_MSG,message)
+        setResult(Activity.RESULT_CANCELED,intent)
+        finish()
     }
 
     private fun showToast(msg: String) {
@@ -115,6 +125,7 @@ class PayRowActivity : AppCompatActivity(), EMVAdapterListener {
                 (findViewById(R.id.buttonCancel) as Button).visibility = View.INVISIBLE
                 countdownInterfaceInitialized = false
             } catch (ex: Exception) {
+                finishPayRowActivity(ex.message)
             }
         }
     }
@@ -139,6 +150,7 @@ class PayRowActivity : AppCompatActivity(), EMVAdapterListener {
                 (findViewById(R.id.textViewTimeoutSeconds) as TextView).text = ""
                 setContentView(R.layout.activity_please_wait)
             } catch (ex: Exception) {
+                finishPayRowActivity(ex.message)
             }
         }
     }
@@ -186,6 +198,7 @@ class PayRowActivity : AppCompatActivity(), EMVAdapterListener {
                     remainingSeconds.toString()
             }
         } catch (ex: Exception) {
+            finishPayRowActivity(ex.message)
         }
     }
 
@@ -206,7 +219,7 @@ class PayRowActivity : AppCompatActivity(), EMVAdapterListener {
                 }
             }
         } catch (ex: Exception) {
-
+            finishPayRowActivity(ex.message)
         }
     }
 
@@ -223,6 +236,7 @@ class PayRowActivity : AppCompatActivity(), EMVAdapterListener {
         try {
             emvAdapter?.cancelSession()
         } catch (ex: Exception) {
+            finishPayRowActivity(ex.message)
         }
     }
 }

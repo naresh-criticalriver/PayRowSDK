@@ -88,6 +88,16 @@ class MainActivity : AppCompatActivity() {
                 // doSomeOperations()
                 result.data?.let {
                     it.getStringExtra(PayRowActivity.RESULT_MSG)?.let {reason->
+                        Log.d(TAG,reason)
+                        showToast(reason)
+                    }
+                }
+            }else if(result.resultCode == Activity.RESULT_CANCELED){
+                val data: Intent? = result.data
+                // doSomeOperations()
+                result.data?.let {
+                    it.getStringExtra(PayRowActivity.RESULT_MSG)?.let {reason->
+                        Log.d(TAG,reason)
                         showToast(reason)
                     }
                 }
