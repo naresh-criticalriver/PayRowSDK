@@ -178,10 +178,14 @@ class PayRowActivity : AppCompatActivity(), EMVAdapterListener {
     ) {
         Log.d(TAG,"SessionInitComplete  $isSuccessful  // $reason")
         showToast(reason)
-        val intent = Intent()
-        intent.putExtra(RESULT_MSG,reason)
-        setResult(Activity.RESULT_OK,intent)
-        finish()
+       if(isSuccessful) {
+           val intent = Intent()
+           intent.putExtra(RESULT_MSG, reason)
+           setResult(Activity.RESULT_OK, intent)
+           finish()
+       }else{
+           finishPayRowActivity(reason)
+       }
     }
 
     override fun onSessionCountdown(remainingSeconds: Int) {
@@ -217,6 +221,8 @@ class PayRowActivity : AppCompatActivity(), EMVAdapterListener {
                         cancelSessionClicked()
                     }
                 }
+            }else{
+                finishPayRowActivity(reason)
             }
         } catch (ex: Exception) {
             finishPayRowActivity(ex.message)

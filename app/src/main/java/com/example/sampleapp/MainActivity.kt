@@ -29,8 +29,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
       //  DashboardActivity.displayToast("Welcome", this)
 
        // val txtRefId = DecimalFormat("00000").format(txRef)
