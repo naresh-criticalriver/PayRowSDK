@@ -10,9 +10,16 @@ android {
     defaultConfig {
         minSdk 23
         targetSdk 31
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "${archivesBaseName}_${variant.name}_${defaultConfig.versionName}.aar"
+        }
     }
 
     buildTypes {
@@ -32,7 +39,7 @@ android {
 
 dependencies {
 
-    implementation fileTree(dir: 'libs', include: ['*.aar'])
+  //  implementation fileTree(dir: 'libs', include: ['*.aar'])
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.6.0'
