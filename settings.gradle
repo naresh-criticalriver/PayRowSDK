@@ -12,10 +12,9 @@ dependencyResolutionManagement {
         mavenCentral()
         maven { url 'https://jitpack.io' }
         flatDir {
-//            D:\PayRowSDK\PayRowSDK\libs
-            // D:\AndroidProjects\PayRowAPP\PayRowLibrary\libs
+            //D:\PayRowSDK\PayRowSDK\libs
             // dirs('/src/main/libs')
-            dirs('PayRowSDk/libs')
+            dirs('PayRowSDK/PayRowSDK/libs')
         }
     }
 }
