@@ -14,7 +14,7 @@ dependencyResolutionManagement {
         flatDir {
             //D:\PayRowSDK\PayRowSDK\libs
             // dirs('/src/main/libs')
-            dirs('PayRowSDK/PayRowSDK/libs')
+            dirs('/PayRowSDK/libs')
         }
     }
 }
