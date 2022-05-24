@@ -15,7 +15,7 @@ dependencyResolutionManagement {
 //            D:\PayRowSDK\PayRowSDK\libs
             // D:\AndroidProjects\PayRowAPP\PayRowLibrary\libs
             // dirs('/src/main/libs')
-            dirs('/PayRowSDk/libs')
+            dirs('PayRowSDk/libs')
         }
     }
 }
