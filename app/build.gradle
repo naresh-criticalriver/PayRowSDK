@@ -6,6 +6,8 @@ plugins {
 android {
     compileSdk 31
 
+
+
     defaultConfig {
         applicationId "com.example.payrowmobile"
         minSdk 23

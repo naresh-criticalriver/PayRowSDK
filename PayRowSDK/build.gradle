@@ -52,19 +52,17 @@ dependencies {
     implementation files('libs/wizzit_emv_sdkvisa_1.0.6_release.aar')
 */
 
-    api(name:'sonic_sdk_release_1.3.0', ext:'aar')
+    /*api(name:'sonic_sdk_release_1.3.0', ext:'aar')
     api(name:'visasensorybranding', ext:'aar')
     api(name:'wizzit_emv_sdk_1.0_release', ext:'aar')
     api(name:'wizzit_emv_sdkmastercard_1.0_release', ext:'aar')
-    api(name:'wizzit_emv_sdkvisa_1.0.6_release', ext:'aar')
+    api(name:'wizzit_emv_sdkvisa_1.0.6_release', ext:'aar')*/
 
-/*
     implementation(name:'sonic_sdk_release_1.3.0', ext:'aar')
     implementation(name:'visasensorybranding', ext:'aar')
     implementation(name:'wizzit_emv_sdk_1.0_release', ext:'aar')
     implementation(name:'wizzit_emv_sdkmastercard_1.0_release', ext:'aar')
     implementation(name:'wizzit_emv_sdkvisa_1.0.6_release', ext:'aar')
-*/
 
     implementation "androidx.security:security-crypto:1.0.0-rc01"
 
@@ -91,7 +89,7 @@ afterEvaluate {
 
                 groupId = 'com.github.naresh-criticalriver'
                 artifactId = 'PayRowSDK'
-                version = '1.0.4'
+                version = '1.0.5'
             }
         }
     }
