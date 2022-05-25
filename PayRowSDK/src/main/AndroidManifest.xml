@@ -5,7 +5,7 @@
     <application>
         <activity
             android:name=".PayRowActivity"
-            android:exported="false" />
+            android:exported="true" />
     </application>
 
 </manifest>
