@@ -1,0 +1,2 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('wizzit_emv_sdkvisa_1.0.6_release.aar'))

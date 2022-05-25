@@ -11,13 +11,18 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
-        flatDir {
+      /*  flatDir {
             //D:\PayRowSDK\PayRowSDK\libs
             // dirs('/src/main/libs')
             dirs('/PayRowSDK/libs')
-        }
+        }*/
     }
 }
 rootProject.name = "SampleApp"
 include ':app'
 include ':PayRowSDK'
+include ':sonic_sdk'
+include ':visa_sensory_branding'
+include ':wizzit_emv_sdk_1.0'
+include ':wizzit_emv_sdkmastercard_1.0'
+include ':wizzit_emv_sdkvisa_1.0.6'

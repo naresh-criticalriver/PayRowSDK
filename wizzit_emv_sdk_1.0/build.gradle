@@ -1,0 +1,2 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('wizzit_emv_sdk_1.0_release.aar'))

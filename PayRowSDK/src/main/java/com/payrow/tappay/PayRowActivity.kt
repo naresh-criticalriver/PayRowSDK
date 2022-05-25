@@ -1,14 +1,15 @@
 package com.payrow.tappay
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.*
-import com.google.android.material.progressindicator.CircularProgressIndicator
+import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.wizzitdigital.emv.sdk.EMVAdapter
 import com.wizzitdigital.emv.sdk.EMVAdapterListener
 import com.wizzitdigital.emv.sdk.EMVCfgVars

@@ -50,11 +50,18 @@ dependencies {
     implementation files('libs/wizzitEmvSdkMasterCard-1.0-release.aar')
     implementation files('libs/wizzitEmvSdkVisa-1.0.6-release.aar')*/
 
-    api(name:'sonic_sdk_release_1.3.0', ext:'aar')
+   /* api(name:'sonic_sdk_release_1.3.0', ext:'aar')
     api(name:'visasensorybranding', ext:'aar')
     api(name:'wizzit_emv_sdk_1.0_release', ext:'aar')
     api(name:'wizzit_emv_sdkmastercard_1.0_release', ext:'aar')
-    api(name:'wizzit_emv_sdkvisa_1.0.6_release', ext:'aar')
+    api(name:'wizzit_emv_sdkvisa_1.0.6_release', ext:'aar')*/
+
+    implementation project(path: ':sonic_sdk')
+    implementation project(path: ':visa_sensory_branding')
+    implementation project(path: ':wizzit_emv_sdk_1.0')
+    implementation project(path: ':wizzit_emv_sdkmastercard_1.0')
+    implementation project(path: ':wizzit_emv_sdkvisa_1.0.6')
+
 
     implementation "androidx.security:security-crypto:1.0.0-rc01"
 
