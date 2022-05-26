@@ -10,7 +10,12 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { url 'https://jitpack.io'
+            credentials{
+                username 'naresh-criticalriver'
+                password  'Lohith@9093'
+            }
+        }
       /*  flatDir {
             //D:\PayRowSDK\PayRowSDK\libs
             // dirs('/src/main/libs')
