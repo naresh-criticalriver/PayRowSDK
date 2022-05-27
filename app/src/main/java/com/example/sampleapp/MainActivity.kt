@@ -9,7 +9,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.payrow.tappay.PayRowActivity
-import com.payrow.tappay.PayRowConfig
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,37 +26,6 @@ class MainActivity : AppCompatActivity() {
       //  DashboardActivity.displayToast("Welcome", this)
 
        // val txtRefId = DecimalFormat("00000").format(txRef)
-
-        val payRowConfig = PayRowConfig(
-            "0784",
-            "0784",
-            1,
-            100.00,
-            0,
-            "00",
-            2,
-            "00",
-            false,
-            "01",
-        )
-
-     /*   //Initializing PayRowAdapter
-       val payRowEMVAdapter= PayRowEMVAdapter()
-        payRowEMVAdapter.initPayRowAdapter(this, payRowConfig, this)
-
-      //  payRowEMVAdapter.initPayRowSession(  merchantToken, txtRefId, amount)
-
-//        For cancelling current session
-       // payRowEMVAdapter.cancelCurrentSession()*/
-
-      /*  startActivity(
-            )*/
-       /* val intent = Intent(this, PayRowActivity::class.java)
-            .putExtra(PayRowActivity.TXT_REF_ID, txtRef)
-            .putExtra(PayRowActivity.AMOUNT, amount)
-      //  startActivityForResult(intent,PayRowActivity.PAYROW_RESULT_CODE)
-        resultLauncher.launch(intent)*/
-
 
         findViewById<AppCompatButton>(R.id.paynow).setOnClickListener {
             val intent = Intent(this, PayRowActivity::class.java)
