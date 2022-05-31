@@ -11,16 +11,18 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io'
-            credentials{
+       /*     credentials{
                 username 'naresh-criticalriver'
                 password  'Lohith@9093'
-            }
+            }*/
         }
       /*  flatDir {
             //D:\PayRowSDK\PayRowSDK\libs
             // dirs('/src/main/libs')
             dirs('/PayRowSDK/libs')
         }*/
+
+        gradlePluginPortal()
     }
 }
 rootProject.name = "SampleApp"
