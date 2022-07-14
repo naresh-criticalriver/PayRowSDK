@@ -10,7 +10,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.TextView
 import android.widget.Toast
-import com.exceptionteam17.simplecardreader.R
+import com.payrow.cardreader.R
 import com.payrow.cardreader.SimpleCardReader
 import com.payrow.cardreader.model.EmvCard
 

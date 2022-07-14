@@ -10,8 +10,8 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.TextView
 import android.widget.Toast
-import com.exceptionteam17.simplecardreader.SimpleCardReader
-import com.exceptionteam17.simplecardreader.model.EmvCard
+import com.payrow.cardreader.SimpleCardReader
+import com.payrow.cardreader.model.EmvCard
 
 class CardReaderActivity : AppCompatActivity(), SimpleCardReader.SimpleCardReaderCallback, NfcAdapter.ReaderCallback {
 
