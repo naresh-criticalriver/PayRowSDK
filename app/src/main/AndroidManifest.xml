@@ -7,8 +7,8 @@
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <uses-permission android:name="android.permission.NFC_PREFERRED_PAYMENT_INFO"/>
-    <uses-permission android:name="android.permission.NFC_TRANSACTION_EVENT"/>
+    <uses-permission android:name="android.permission.NFC_PREFERRED_PAYMENT_INFO" />
+    <uses-permission android:name="android.permission.NFC_TRANSACTION_EVENT" />
 
     <uses-feature
         android:name="android.hardware.nfc"
@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SampleApp">
         <activity
-            android:name=".MainActivity"
+            android:name=".CardReaderActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.payrow.tappay.PayRowActivity"/>
+        <activity android:name="com.payrow.tappay.PayRowActivity" />
     </application>
 
 </manifest>
