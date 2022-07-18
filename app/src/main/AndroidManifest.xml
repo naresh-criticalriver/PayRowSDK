@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SampleApp">
         <activity
-            android:name=".CardReaderActivity"
+            android:name="com.payrow.cardreader.view.CardReaderActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

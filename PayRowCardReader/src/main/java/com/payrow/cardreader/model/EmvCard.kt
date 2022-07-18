@@ -31,6 +31,7 @@ data class EmvCard(
             // Check pattern, read card number, date and service
             if (matches.find()) {
                 if(cardNumber.isEmpty()) {
+                    matches.groupCount()
                     cardNumber = matches.group(1)?: ""
                     expireDateMonth = matches.group(2)?.substring(2, 4)?: ""
                     expireDateYear = matches.group(2)?.substring(0, 2)?: ""

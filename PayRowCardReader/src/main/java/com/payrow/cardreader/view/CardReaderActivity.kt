@@ -8,13 +8,15 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.payrow.cardreader.R
 import com.payrow.cardreader.SimpleCardReader
 import com.payrow.cardreader.model.EmvCard
 
-class CardReaderActivity : AppCompatActivity(), SimpleCardReader.SimpleCardReaderCallback, NfcAdapter.ReaderCallback {
+class CardReaderActivity : AppCompatActivity(), SimpleCardReader.SimpleCardReaderCallback,
+    NfcAdapter.ReaderCallback {
 
     private var nfcAdapter: NfcAdapter? = null
 
@@ -33,28 +35,41 @@ class CardReaderActivity : AppCompatActivity(), SimpleCardReader.SimpleCardReade
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 try {
                     startActivityForResult(Intent(Settings.Panel.ACTION_NFC), 2265)
-                } catch (ignored: ActivityNotFoundException) { }
+                } catch (ignored: ActivityNotFoundException) {
+                }
 
             } else {
                 try {
                     startActivity(Intent(Settings.ACTION_NFC_SETTINGS))
-                }catch (ignored: ActivityNotFoundException){}
+                } catch (ignored: ActivityNotFoundException) {
+                }
             }
         }
     }
 
     override fun cardIsReadyToRead(card: EmvCard) {
-        val info = card.toString()
-        findViewById<TextView>(R.id.tvDetails).text = info
+        findViewById<TextView>(R.id.tvMessage).visibility = View.GONE
+        findViewById<TextView>(R.id.tvCardDetails).text =
+            "${card.cardNumber.subSequence(0, 4)} ${
+                card.cardNumber.subSequence(
+                    4,
+                    8
+                )
+            } ${card.cardNumber.subSequence(8, 12)} ${card.cardNumber.subSequence(12, 16)}"
+        findViewById<TextView>(R.id.tvCardMonth).text = card.expireDateMonth
+        findViewById<TextView>(R.id.tvDivider).text = "/"
+        findViewById<TextView>(R.id.tvCardYear).text = card.expireDateYear
 //        Toast.makeText(this, info, Toast.LENGTH_LONG).show()
     }
 
     override fun cardMovedTooFastOrLockedNfc() {
-        Toast.makeText(this, "Tap again", Toast.LENGTH_LONG).show()
+        findViewById<TextView>(R.id.tvMessage).text = "Tap again"
+//        Toast.makeText(this, "Tap again", Toast.LENGTH_LONG).show()
     }
 
     override fun errorReadingOrUnsupportedCard() {
-        Toast.makeText(this, "Error / Unsupported", Toast.LENGTH_LONG).show()
+        findViewById<TextView>(R.id.tvMessage).text = "Error / Unsupported"
+//        Toast.makeText(this, "Error / Unsupported", Toast.LENGTH_LONG).show()
     }
 
     override fun onTagDiscovered(tag: Tag?) {
@@ -63,11 +78,13 @@ class CardReaderActivity : AppCompatActivity(), SimpleCardReader.SimpleCardReade
 
     public override fun onResume() {
         super.onResume()
-        nfcAdapter?.enableReaderMode(this, this,
+        nfcAdapter?.enableReaderMode(
+            this, this,
             NfcAdapter.FLAG_READER_NFC_A or
                     NfcAdapter.FLAG_READER_NFC_B or
                     NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK,
-            null)
+            null
+        )
     }
 
     public override fun onPause() {
